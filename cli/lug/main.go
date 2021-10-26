@@ -75,10 +75,10 @@ func init() {
 		os.Exit(0)
 	}
 
-	if flags.license {
-		fmt.Print(licenseText)
-		os.Exit(0)
-	}
+	// if flags.license {
+	// 	fmt.Print(licenseText)
+	// 	os.Exit(0)
+	// }
 
 	file, err := os.Open(flags.configFile)
 	if err != nil {

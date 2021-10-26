@@ -8,4 +8,4 @@ FROM debian:9
 RUN apt update && apt install rsync -y
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
-ENTRYPOINT ["./lug"]
+ENTRYPOINT ["./lug","-c","/configs/config.yaml"]

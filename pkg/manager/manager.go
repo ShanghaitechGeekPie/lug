@@ -199,7 +199,7 @@ func (m *Manager) Run() {
 		select {
 		case <-c:
 			if m.running {
-				m.logger.WithField("event", "poll_start").Info("Start polling workers")
+				m.logger.WithField("event", "poll_start").Debug("Start polling workers")
 				running_worker_cnt := 0
 				shouldCheckpoint := false
 				for i, w := range m.workers {
@@ -232,7 +232,7 @@ func (m *Manager) Run() {
 					}
 				}
 				m.launchWorkerFromPendingQueue(m.config.ConcurrentLimit - running_worker_cnt)
-				m.logger.WithField("event", "poll_end").Info("Stop polling workers")
+				m.logger.WithField("event", "poll_end").Debug("Stop polling workers")
 
 				// Here we do not checkpoint very concisely (e.g. every time after a successful sync).
 				// We just want to minimize re-sync after restarting lug.

@@ -11,5 +11,6 @@ FROM debian:12
 RUN apt update && apt install rsync -y
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
+COPY --from=build-env /go/src/github.com/sjtug/lug/entrypoint.sh /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
 ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]

@@ -12,5 +12,4 @@ RUN apt update && apt install rsync -y
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
-# ENTRYPOINT ["./lug","-c","/configs/config.yaml"]
-CMD [ "sh", "-c", "'node_exporter --collector.disable-defaults --collector.filesystem --collector.cpu --collector.cpufreq --collector.diskstats --collector.meminfo --collector.netdev --collector.netclass & && ./lug -c /configs/config.yaml'" ]
+ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]

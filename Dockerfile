@@ -13,4 +13,6 @@ WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
 COPY --from=build-env /go/src/github.com/sjtug/lug/entrypoint.sh /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
+COPY genisolist.ini /
+COPY genisolist.py /
 ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]

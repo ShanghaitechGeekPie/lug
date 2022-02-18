@@ -2,6 +2,7 @@ package manager
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/ant0ine/go-json-rest/rest"
@@ -64,10 +65,12 @@ func (r *RestfulAPI) getManagerStatusCommon(w rest.ResponseWriter, req *rest.Req
 	}
 	// summary mode
 	for workerKey, rawWorkerStatus := range rawStatus.WorkerStatus {
-		managerStatusSimple.WorkerStatus[workerKey] = WorkerStatusSimple{
-			Result:       rawWorkerStatus.Result,
-			LastFinished: rawWorkerStatus.LastFinished,
-			Idle:         rawWorkerStatus.Idle,
+		if !strings.Contains(workerKey, "[skip]") {
+			managerStatusSimple.WorkerStatus[workerKey] = WorkerStatusSimple{
+				Result:       rawWorkerStatus.Result,
+				LastFinished: rawWorkerStatus.LastFinished,
+				Idle:         rawWorkerStatus.Idle,
+			}
 		}
 	}
 	w.WriteJson(managerStatusSimple)

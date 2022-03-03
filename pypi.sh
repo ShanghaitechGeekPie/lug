@@ -26,6 +26,7 @@ hash-index = false
 stop-on-error = false
 delete-packages = true
 compare-method = stat
+proxy=http://10.110.110.1:7890
 [plugins]
 enabled =
     blocklist_project

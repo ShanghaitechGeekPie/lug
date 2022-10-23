@@ -23,5 +23,5 @@ RUN curl https://cdn.jsdelivr.net/gh/wenxuanjun/vindex/vindex -o /usr/bin/vindex
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
-COPY scripts/ /
+COPY scripts /scripts
 ENTRYPOINT ["/bin/bash", "/scripts/entrypoint.sh"]

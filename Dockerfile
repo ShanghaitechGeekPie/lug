@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
 COPY scripts/ /
-ENTRYPOINT ["/bin/bash", "/app/scripts/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/scripts/entrypoint.sh"]

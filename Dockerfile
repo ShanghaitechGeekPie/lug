@@ -1,12 +1,12 @@
 # Build Stage
-FROM golang AS build-env
+FROM golang as build-env
 
 # The GOPATH in the image is /go.
 ADD . /go/src/github.com/sjtug/lug
 WORKDIR /go/src/github.com/sjtug/lug
 RUN go build github.com/sjtug/lug/cli/lug
-RUN curl -L https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz -o /tmp/node_exporter.tar.gz && \
-tar -xzf /tmp/node_exporter.tar.gz -C /tmp && mv /tmp/node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin/
+RUN curl -L https://github.com/prometheus/node_exporter/releases/download/v1.4.0/node_exporter-1.4.0.linux-amd64.tar.gz -o /tmp/node_exporter.tar.gz && \
+tar -xzf /tmp/node_exporter.tar.gz -C /tmp && mv /tmp/node_exporter-1.4.0.linux-amd64/node_exporter /usr/local/bin/
 
 # Production Stage
 FROM debian:sid
@@ -22,7 +22,6 @@ RUN curl https://cdn.jsdelivr.net/gh/wenxuanjun/vindex/vindex -o /usr/bin/vindex
 
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
-COPY --from=build-env /go/src/github.com/sjtug/lug/entrypoint.sh /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
 COPY scripts/ /
 ENTRYPOINT ["/bin/bash", "/app/scripts/entrypoint.sh"]

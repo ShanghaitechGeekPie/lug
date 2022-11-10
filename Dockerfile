@@ -17,9 +17,6 @@ RUN pip install bandersnatch && sed -i '/^socks4/d' /etc/proxychains4.conf && ec
 RUN curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -o /usr/bin/repo && \
 chmod +x /usr/bin/repo && export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' && ln -sf /usr/bin/python3 /usr/bin/python
 
-# Custom indexer to replace nginx autoindex
-RUN curl https://cdn.jsdelivr.net/gh/wenxuanjun/vindex/vindex -o /usr/bin/vindex && chmod +x /usr/bin/vindex
-
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
 COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/

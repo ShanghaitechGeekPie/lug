@@ -5,20 +5,24 @@ FROM golang as build-env
 ADD . /go/src/github.com/sjtug/lug
 WORKDIR /go/src/github.com/sjtug/lug
 RUN go build github.com/sjtug/lug/cli/lug
-RUN curl -L https://github.com/prometheus/node_exporter/releases/download/v1.4.0/node_exporter-1.4.0.linux-amd64.tar.gz -o /tmp/node_exporter.tar.gz && \
-tar -xzf /tmp/node_exporter.tar.gz -C /tmp && mv /tmp/node_exporter-1.4.0.linux-amd64/node_exporter /usr/local/bin/
 
 # Production Stage
 FROM debian:sid
 RUN apt update && apt install rsync python3 python3-pip git curl proxychains4 libssl1.1 -y
 RUN pip install bandersnatch && sed -i '/^socks4/d' /etc/proxychains4.conf && echo "socks5 10.111.111.1 1080" >> /etc/proxychains4.conf
 
+# Fetch Node Exporter
+RUN curl -L \
+    https://github.com/prometheus/node_exporter/releases/download/v1.5.0/node_exporter-1.5.0.linux-amd64.tar.gz \
+    -o /tmp/node_exporter.tar.gz && tar -xzf /tmp/node_exporter.tar.gz -C /tmp && \
+    mv /tmp/node_exporter-1.5.0.linux-amd64/node_exporter /usr/local/bin/
+
 # Repo for AOSP synchronization
 RUN curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -o /usr/bin/repo && \
-chmod +x /usr/bin/repo && export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' && ln -sf /usr/bin/python3 /usr/bin/python
+    chmod +x /usr/bin/repo && export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' && \
+    ln -sf /usr/bin/python3 /usr/bin/python
 
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/
-COPY --from=build-env /usr/local/bin/node_exporter /usr/local/bin/
 COPY scripts /scripts
 ENTRYPOINT ["/bin/bash", "/scripts/entrypoint.sh"]

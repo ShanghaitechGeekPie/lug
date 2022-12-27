@@ -8,7 +8,7 @@ RUN go build github.com/sjtug/lug/cli/lug
 
 # Production Stage
 FROM debian:sid
-RUN apt update && apt install rsync python3 python3-pip git curl proxychains4 libssl1.1 -y
+RUN apt update && apt install rsync python3 python3-pip git curl proxychains4 -y
 RUN pip install bandersnatch && sed -i '/^socks4/d' /etc/proxychains4.conf && echo "socks5 10.111.111.1 1080" >> /etc/proxychains4.conf
 
 # Fetch Node Exporter

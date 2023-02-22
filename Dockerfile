@@ -18,9 +18,9 @@ RUN curl -L \
     mv /tmp/node_exporter-1.5.0.linux-amd64/node_exporter /usr/local/bin/
 
 # Repo for AOSP synchronization
-RUN curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -o /usr/bin/repo && \
-    chmod +x /usr/bin/repo && export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' && \
-    ln -sf /usr/bin/python3 /usr/bin/python
+RUN curl https://mirrors.shanghaitech.edu.cn/git/git-repo -o /usr/bin/repo && \
+    chmod +x /usr/bin/repo && ln -sf /usr/bin/python3 /usr/bin/python && \
+    echo "REPO_URL='https://mirrors.shanghaitech.edu.cn/git/git-repo'" > /etc/environment
 
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/sjtug/lug/lug /app/

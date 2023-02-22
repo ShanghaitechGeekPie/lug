@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-BANDERSNATCH=${BANDERSNATCH:-"/usr/local/bin/bandersnatch"}
+BANDERSNATCH=${BANDERSNATCH:-"~/.local/bin/bandersnatch"}
 TUNASYNC_UPSTREAM=${TUNASYNC_UPSTREAM_URL:-"https://pypi.org/"}
 TUNASYNC_WORKING_DIR="/mirrors/pypi"
 CONF="/tmp/bandersnatch.conf"

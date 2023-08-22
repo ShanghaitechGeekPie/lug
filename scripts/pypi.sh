@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 BANDERSNATCH=${BANDERSNATCH:-"~/.local/bin/bandersnatch"}
-TUNASYNC_UPSTREAM=${TUNASYNC_UPSTREAM_URL:-"https://pypi.org/"}
+TUNASYNC_UPSTREAM=${TUNASYNC_UPSTREAM_URL:-"https://pypi.org"}
 TUNASYNC_WORKING_DIR="/mirrors/pypi"
 CONF="/tmp/bandersnatch.conf"
 INIT=${INIT:-"0"}
@@ -26,7 +26,7 @@ hash-index = false
 stop-on-error = false
 delete-packages = true
 compare-method = stat
-proxy=http://10.111.111.1:7890
+proxy="http://10.15.89.182:8080"
 [plugins]
 enabled =
     blocklist_project
@@ -42,7 +42,7 @@ EOF
 		echo "    $i"
 	done
 ) > $CONF
-	exec $BANDERSNATCH -c $CONF mirror 
+	exec $BANDERSNATCH -c $CONF mirror
 else
 	cat > $CONF << EOF
 [mirror]
@@ -54,6 +54,7 @@ workers = 10
 hash-index = false
 stop-on-error = false
 delete-packages = false
+proxy="http://10.15.89.182:8080"
 EOF
 
 	exec $BANDERSNATCH -c $CONF mirror

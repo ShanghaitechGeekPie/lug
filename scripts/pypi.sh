@@ -17,26 +17,45 @@ if [[ $INIT == "0" ]]; then
 (
 	cat << EOF
 [mirror]
-directory = ${TUNASYNC_WORKING_DIR}
-master = ${TUNASYNC_UPSTREAM}
+directory = /mirrors/pypi
+master = https://pypi.org
+#download-mirror = https://mirrors.tuna.tsinghua.edu.cn/pypi
+storage-backend = filesystem
 json = true
 timeout = 300
-workers = 5
+workers = 10
 hash-index = false
 stop-on-error = false
 delete-packages = true
 compare-method = stat
-proxy="http://10.15.89.182:8080"
+#proxy="http://10.15.89.182:8080"
+
 [plugins]
 enabled =
+    regex_project
     blocklist_project
+    prerelease_release
+
+[filter_regex]
+packages =
+    .+-nightly(-|$)
+
+[filter_prerelease]
+packages =
+    duckdb
+    graphscope-client
+    lalsuite
+    gs-apps
+    gs-engine
+    gs-include
+    bigdl-dllib
+    bigdl-dllib-spark2
+    bigdl-dllib-spark3
+    ovito
+
 [blocklist]
 packages =
-    tf-nightly-gpu
-    tf-nightly
-    tensorflow-io-nightly
-    tf-nightly-cpu
-    pyagrum-nightly
+    uselesscapitalquiz
 EOF
 	for i in $PYPI_EXCLUDE; do
 		echo "    $i"
@@ -54,7 +73,7 @@ workers = 10
 hash-index = false
 stop-on-error = false
 delete-packages = false
-proxy="http://10.15.89.182:8080"
+#proxy="http://10.15.89.182:8080"
 EOF
 
 	exec $BANDERSNATCH -c $CONF mirror

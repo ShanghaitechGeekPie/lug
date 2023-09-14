@@ -9,7 +9,7 @@ RUN go build github.com/sjtug/lug/cli/lug
 # Production Stage
 FROM debian:sid
 RUN apt update && apt install rsync python3 python3-pip pipx git curl proxychains4 -y
-RUN pipx install bandersnatch && sed -i '/^socks4/d' /etc/proxychains4.conf && echo "socks5 10.111.111.1 1080" >> /etc/proxychains4.conf
+RUN pipx install bandersnatch && sed -i '/^socks4/d' /etc/proxychains4.conf && echo "socks5 10.15.89.182 1080" >> /etc/proxychains4.conf
 
 # Fetch Node Exporter
 RUN curl -L \

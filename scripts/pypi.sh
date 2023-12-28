@@ -56,6 +56,7 @@ packages =
 [blocklist]
 packages =
     uselesscapitalquiz
+    mpf
 EOF
 	for i in $PYPI_EXCLUDE; do
 		echo "    $i"

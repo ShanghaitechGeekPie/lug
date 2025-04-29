@@ -28,6 +28,7 @@ func (r *RestfulAPI) GetAPIHandler() http.Handler {
 	router, err := rest.MakeRouter(
 		rest.Get("/lug/v1/admin/manager/detail", r.getManagerStatusDetail),
 		rest.Get("/lug/v1/manager/summary", r.getManagerStatusSummary),
+		rest.Head("/lug/v1/manager/summary", r.getManagerStatusHead),
 		rest.Post("/lug/v1/admin/manager/start", r.startManager),
 		rest.Post("/lug/v1/admin/manager/stop", r.stopManager),
 		rest.Delete("/lug/v1/admin/manager", r.exitManager),
@@ -82,6 +83,10 @@ func (r *RestfulAPI) getManagerStatusDetail(w rest.ResponseWriter, req *rest.Req
 
 func (r *RestfulAPI) getManagerStatusSummary(w rest.ResponseWriter, req *rest.Request) {
 	r.getManagerStatusCommon(w, req, false)
+}
+
+func (r *RestfulAPI) getManagerStatusHead(w rest.ResponseWriter, req *rest.Request) {
+	return
 }
 
 func (r *RestfulAPI) startManager(w rest.ResponseWriter, req *rest.Request) {

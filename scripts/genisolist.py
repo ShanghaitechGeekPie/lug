@@ -9,7 +9,7 @@ import logging
 import collections
 import sys
 from urllib.parse import urljoin
-from distutils.version import LooseVersion
+from looseversion import LooseVersion
 from configparser import ConfigParser
 
 logger = logging.getLogger(__name__)

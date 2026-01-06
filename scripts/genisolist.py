@@ -131,7 +131,7 @@ def getJsonOutput(url_dict, prio={}):
             "display": distro,
             "type": list({c for _, _, c in url_dict[distro]})[0],
             "links": [
-                {"name": re.sub("\(.*\)", "", name).strip(), "external": re.search("\((.*)\)", name).group(1).strip(),"link": url} for name, url, _ in url_dict[distro]
+                {"name": re.sub(r"\(.*\)", "", name).strip(), "external": re.search(r"\((.*)\)", name).group(1).strip(),"link": url} for name, url, _ in url_dict[distro]
             ]
         })
 

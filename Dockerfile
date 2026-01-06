@@ -8,7 +8,7 @@ RUN go build github.com/sjtug/lug/cli/lug
 
 # Production Stage
 FROM debian:sid
-RUN apt update && apt install rsync python3 git curl -y
+RUN apt update && apt install rsync python3 python3-looseversion git curl -y
 
 # Repo for AOSP synchronization
 RUN curl https://mirrors.bfsu.edu.cn/git/git-repo -o /usr/bin/repo && \
